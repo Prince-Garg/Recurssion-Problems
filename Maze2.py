@@ -1,35 +1,35 @@
-arr = [
-    [ 1 , 1 , 1 , 1 ],
-    [ 1 , 0 , 0 , 1 ],
-    [ 1 , 0 , 0 , 1 ],
-    [ 1 , 0 , 0 , 1 ]
-]
+a = [[1,0,0,0],
+	 [1,0,0,0],
+	 [1,1,1,1],
+	 [1,0,0,1]]
 
-max_rows = 3
-max_cols = 3
 
-def solveMaze(row, col, result):
-    if row == max_rows and col == max_cols:
-        return True
-    
-    if row > max_rows or col > max_cols:
-        return False    
-    
-    if arr[row][col] == 0:
-        return False
-    
 
-    ret = False
-    result.append((row + 1, col))
-    ret = solveMaze(row + 1, col, result)
-    if not ret:
-        result.pop()
-        result.append((row, col + 1))
-        ret = solveMaze(row, col + 1, result)
-        if not ret:
-            result.pop()
-    return ret
 
-result = [(0,0)]
-solveMaze(0, 0, result)
-print result
+def track(i,j,res):
+	# print "start"
+	if i==3 and j==3:
+		res.append([i,j])
+		print res
+		return
+
+	if i < 3 and str(a[i+1][j]) == "1":
+		res.append([i,j])
+		track(i+1,j,res)
+	
+	elif j < 3 and str(a[i][j+1]) == "1":
+		res.append([i,j])
+		track(i,j+1,res)
+	
+	else:
+		a[i][j] = 0
+		i = res[-1][0]
+		j = res[-1][1]
+		res.pop()
+		track(i,j,res)
+
+
+
+
+arr = []		#for appending result
+track(0,0,arr)
